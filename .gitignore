@@ -1,0 +1,14 @@
+build/
+dist/
+.coverage
+*.pyc
+.idea
+*.iml
+hayrack.egg-info/
+.tox
+*.DS_Store*
+nosetests.xml
+coverage.xml
+*~
+.python-version
+hayrack*.tar.gz
