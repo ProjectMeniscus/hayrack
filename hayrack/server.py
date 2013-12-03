@@ -36,12 +36,14 @@ class StdInRelayServer(object):
         self.end_loop = True
 
 
-def start_io(bind_ip, bind_port):
+def start_io(bind_ip, bind_port,
+             high_water_mark=0, socket_linger=-1):
     """
     Create a new StdInRelayServer, create a signal_handler to stop the
     server when SIGINT is received, and start the server.
     """
-    zmq_caster = transport.ZeroMQCaster((bind_ip, bind_port))
+    zmq_caster = transport.ZeroMQCaster(
+        bind_ip, bind_port, high_water_mark, socket_linger)
     server = StdInRelayServer(zmq_caster)
 
     def signal_handler(signal, frame):

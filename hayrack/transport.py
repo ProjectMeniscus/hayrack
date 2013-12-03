@@ -14,16 +14,23 @@ class ZeroMQCaster(object):
     across the clients.
     """
 
-    def __init__(self, bind_host_tuple):
+    def __init__(self, bind_host, bind_port,
+                 high_water_mark=0, socket_linger=-1):
         """
         Creates an instance of the ZeroMQCaster.  A zmq PUSH socket is
         created and is bound to the specified host:port.
 
-        :param bind_host_tuple: (host, port), for example ('127.0.0.1', '5000')
+        :param bind_host: ip address to bind to
+        :param bind_port: port to bind to
+        :param high_water_mark: messages buffered before ZMQ socket.send blocks
+        :param socket_linger: time to wait for unsent messages to process on
+        socket.close (milliseconds)
         """
 
         self.socket_type = zmq.PUSH
-        self.bind_host = 'tcp://{0}:{1}'.format(*bind_host_tuple)
+        self.bind_host = 'tcp://{0}:{1}'.format(bind_host, bind_port)
+        self.high_water_mark = int(high_water_mark)
+        self.socket_linger = int(socket_linger)
         self.context = None
         self.socket = None
         self.bound = False
@@ -36,6 +43,8 @@ class ZeroMQCaster(object):
         """
         self.context = zmq.Context()
         self.socket = self.context.socket(self.socket_type)
+        self.socket.set_hwm(self.high_water_mark)
+        self.socket.setsockopt(zmq.LINGER, self.socket_linger)
         self.socket.bind(self.bind_host)
         self.bound = True
 
