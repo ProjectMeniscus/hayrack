@@ -14,4 +14,6 @@ from hayrack import server
 
 
 if __name__ == '__main__':
-    server.start_io(cfg.core.zmq_bind_host, cfg.core.zmq_bind_port)
+
+    server.start_io(cfg.core.zmq_bind_host, cfg.core.zmq_bind_port,
+                    cfg.core.zmq_hwm, cfg.core.zmq_linger)

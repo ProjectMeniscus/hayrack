@@ -9,7 +9,6 @@ class WhenTestingZeroMqCaster(unittest.TestCase):
     def setUp(self):
         self.host = '127.0.0.1'
         self.port = '5000'
-        self.bind_host_tuple = (self.host, self.port)
         self.msg = '{"key": "value"}'
         self.zmq_mock = MagicMock()
         self.zmq_mock.PUSH = transport.zmq.PUSH
@@ -25,7 +24,7 @@ class WhenTestingZeroMqCaster(unittest.TestCase):
         # when the Context() constructor is called
         self.zmq_mock.Context.return_value = self.context_mock
 
-        self.caster = transport.ZeroMQCaster(self.bind_host_tuple)
+        self.caster = transport.ZeroMQCaster(self.host, self.port)
 
     def test_constructor(self):
         self.assertEqual(self.caster.socket_type, transport.zmq.PUSH)

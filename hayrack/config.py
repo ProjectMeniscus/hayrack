@@ -10,10 +10,13 @@ from ConfigParser import ConfigParser
 
 _CONFIG_FILE = '/etc/hayrack/hayrack.conf'
 
+
 _CFG_DEFAULTS = {
     'core': {
         'zmq_bind_host': '0.0.0.0',
-        'zmq_bind_port': '5000'
+        'zmq_bind_port': '5000',
+        'zmq_hwm': 0,
+        'zmq_linger': -1
     },
     'logging': {
         'console': True,

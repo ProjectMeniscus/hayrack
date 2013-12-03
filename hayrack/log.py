@@ -10,5 +10,5 @@ def configure_logging(cfg):
 
     if cfg.logging.logfile:
         logger.addHandler(logging.FileHandler(cfg.logging.logfile))
-    if cfg.logging.console:
+    if bool(cfg.logging.console):
         logger.addHandler(logging.StreamHandler())
