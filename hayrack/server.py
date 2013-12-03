@@ -24,8 +24,12 @@ class StdInRelayServer(object):
         self.zmq_caster.bind()
 
         while not self.end_loop:
-            line = sys.stdin.readline()
-            self.zmq_caster.cast(line)
+            try:
+                line = sys.stdin.readline()
+                self.zmq_caster.cast(line)
+            except Exception as ex:
+                _LOG.exception(ex)
+                self.end_loop = True
 
         self.zmq_caster.close()
 
