@@ -18,7 +18,7 @@ class StdInRelayServer(object):
 
     def start(self):
         """
-        Start the server's IO loop and bind the ZMQ Caster to the socker
+        Start the server's IO loop and bind the ZMQ Caster to the socket
         """
         self.end_loop = False
         self.zmq_caster.bind()

@@ -43,7 +43,8 @@ class ZeroMQCaster(object):
         """
         self.context = zmq.Context()
         self.socket = self.context.socket(self.socket_type)
-        self.socket.set_hwm(self.high_water_mark)
+        #self.socket.set_hwm(self.high_water_mark)
+        self.socket.setsockopt(zmq.HWM, self.high_water_mark)
         self.socket.setsockopt(zmq.LINGER, self.socket_linger)
         self.socket.bind(self.bind_host)
         self.bound = True
