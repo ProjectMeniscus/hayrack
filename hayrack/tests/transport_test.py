@@ -51,7 +51,7 @@ class WhenTestingZeroMqCaster(unittest.TestCase):
         self.socket_mock.send.assert_called_once_with(self.msg)
 
         self.caster.close()
-        with self.assertRaises(transport.zmq.error.ZMQError):
+        with self.assertRaises(transport.zmq.core.error.ZMQError):
             self.caster.cast(self.msg)
 
     def test_close(self):

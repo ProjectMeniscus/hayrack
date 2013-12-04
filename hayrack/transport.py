@@ -54,7 +54,7 @@ class ZeroMQCaster(object):
         Sends a message over the zmq PUSH socket
         """
         if not self.bound:
-            raise zmq.error.ZMQError(
+            raise zmq.core.error.ZMQError(
                 "ZeroMQCaster is not bound to a socket")
         self.socket.send(msg)
 
