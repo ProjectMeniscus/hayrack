@@ -1,6 +1,7 @@
 """
 The transport module defines the classes that serve as the transport layer for
-Portal when sending parsed syslog messages downstream.
+Hayrack when sending messages downstream.  Classes for sending and receiving
+are included.
 """
 
 import zmq
@@ -68,3 +69,60 @@ class ZeroMQCaster(object):
             self.socket = None
             self.context = None
             self.bound = False
+
+
+class ZeroMQReceiver(object):
+    """
+    ZeroMQReceiver allows for messages to be received by pulling
+    messages over a zmq socket from an upstream host.  This client may
+    connect to multiple upstream hosts.
+    """
+
+    def __init__(self, connect_host_tuples):
+        """
+        Creates an instance of the ZeroMQReceiver.
+
+        :param connect_host_tuples: [(host, port), (host, port)],
+        for example [('127.0.0.1', '5000'), ('127.0.0.1', '5001')]
+        """
+        self.upstream_hosts = [
+            "tcp://{}:{}".format(*host_tuple)
+            for host_tuple in connect_host_tuples]
+        self.socket_type = zmq.PULL
+        self.context = None
+        self.socket = None
+        self.connected = False
+
+    def connect(self):
+        """
+        Connect the receiver to upstream hosts.  Create a zmq.Context
+        and a zmq.PULL socket, and is connect the socket to all
+        specified host:port tuples.
+        """
+        self.context = zmq.Context()
+        self.socket = self.context.socket(self.socket_type)
+
+        for host in self.upstream_hosts:
+            self.socket.connect(host)
+
+        self.connected = True
+
+    def get(self):
+        """
+        Read a message form the zmq socket and return
+        """
+        if not self.connected:
+            raise zmq.core.error.ZMQError(
+                "ZeroMQReceiver is not connected to a socket")
+        return self.socket.recv()
+
+    def close(self):
+        """
+        Close the zmq socket
+        """
+        if self.connected:
+            self.socket.close()
+            self.context.destroy()
+            self.socket = None
+            self.context = None
+            self.connected = False
