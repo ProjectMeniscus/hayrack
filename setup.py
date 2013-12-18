@@ -15,7 +15,10 @@ def read(relative):
 setup(
     name='hayrack',
     version=read('VERSION')[0],
-    description='',
+    description="""
+    A tool for capturing messages from STDIN, such as when run as a program
+    destination by Syslog-NG, and then load balance these messages over ZeroMQ
+    to downstream worker nodes for processing.""",
     author='Steven Gonzales',
     author_email='steven.gonzales@rackspace.com',
     tests_require=read('./tools/test-requires'),
