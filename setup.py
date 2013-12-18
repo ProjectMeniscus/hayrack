@@ -21,6 +21,7 @@ setup(
     to downstream worker nodes for processing.""",
     author='Steven Gonzales',
     author_email='steven.gonzales@rackspace.com',
+    url='https://github.com/ProjectMeniscus/hayrack',
     tests_require=read('./tools/test-requires'),
     install_requires=read('./tools/pip-requires'),
     test_suite='nose.collector',

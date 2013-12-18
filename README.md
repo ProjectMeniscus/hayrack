@@ -31,9 +31,11 @@ rcvr.close()
 
 The client side receiver creates a ZeroMQ PULL socket that can connect to 1 or more ZeroMQ sockets, and pull messages across the socket.
 
-### Installing and running Hayrack.
+### Installing and running Hayrack
 
-Hayrack can be used as a library as shown above or run as an application.  To build a debian package for Hayrack you can run [make_deb.sh](https://github.com/ProjectMeniscus/hayrack/blob/master/make_deb.sh) file included in the repo.  This will create a configuration file at [/etc/hayrack/hayrack.conf](https://github.com/ProjectMeniscus/hayrack/blob/master/pkg/layout/etc/hayrack/hayrack.conf) that will allow you to configure the Hayrack server.  When installed the server can be run using [/usr/share/hayrack/bin/run.py](https://github.com/ProjectMeniscus/hayrack/blob/master/pkg/layout/usr/share/hayrack/bin/run.py).
+Hayrack can be used as a library as shown above or run as an application.  The application is available for installation on [PyPi](https://pypi.python.org/pypi/hayrack).
+
+To build a debian package for Hayrack you can run [make_deb.sh](https://github.com/ProjectMeniscus/hayrack/blob/master/make_deb.sh) file included in the repo.  This will also create a configuration file at [/etc/hayrack/hayrack.conf](https://github.com/ProjectMeniscus/hayrack/blob/master/pkg/layout/etc/hayrack/hayrack.conf) that will allow you to configure the Hayrack server.  When installed the server can be run using [/usr/share/hayrack/bin/run.py](https://github.com/ProjectMeniscus/hayrack/blob/master/pkg/layout/usr/share/hayrack/bin/run.py).
 
 The initial intended use for this application is to serve as a transport mechanism for logging-as-a-service. Hayrack is used to receive messages from a local Syslog-NG server on STDIN and then load balance these messages over ZeroMQ to downstream worker nodes for processing.
 
